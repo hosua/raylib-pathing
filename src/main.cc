@@ -138,8 +138,9 @@ void UpdateDrawFrame(void){
 			GuiButton({50, 195, 25, 25 }, GuiIconText(ICON_ARROW_UP, ""))){
 		world.movePlayer(world.getPlayerPos().x, curr->getRows()-1, true);
 		if (curr->m_up.get() == nullptr){
-			curr->m_up = std::make_unique<WorldNode>();
+			curr->m_up = std::make_shared<WorldNode>();
 			randomizeB(world, world.getCurrNode()->m_up.get(), false);
+			curr->m_up->m_down = curr;
 		}
 		world.setCurrNode(curr->m_up);
 	}
@@ -147,19 +148,21 @@ void UpdateDrawFrame(void){
 	if (world.getPlayerPos().x == 0 &&
 			GuiButton({25, 225, 25, 25 }, GuiIconText(ICON_ARROW_LEFT, ""))){
 		world.movePlayer(curr->getCols()-1, world.getPlayerPos().y, true);
-		if (curr->m_down.get() == nullptr){
-			curr->m_down = std::make_unique<WorldNode>();
-			randomizeB(world, world.getCurrNode()->m_down.get(), false);
+		if (curr->m_left.get() == nullptr){
+			curr->m_left = std::make_shared<WorldNode>();
+			randomizeB(world, world.getCurrNode()->m_left.get(), false);
+			curr->m_left->m_right = curr;
 		}
-		world.setCurrNode(curr->m_down);
+		world.setCurrNode(curr->m_left);
 	}
 
 	if (world.getPlayerPos().x == world.getCurrNode()->getCols()-1 &&
 			GuiButton({75, 225, 25, 25 }, GuiIconText(ICON_ARROW_RIGHT, ""))){
 		world.movePlayer(0, world.getPlayerPos().y, true);
 		if (curr->m_right.get() == nullptr){
-			curr->m_right = std::make_unique<WorldNode>();
+			curr->m_right = std::make_shared<WorldNode>();
 			randomizeB(world, world.getCurrNode()->m_right.get(), false);
+			curr->m_right->m_left = curr;
 		}
 		world.setCurrNode(curr->m_right);
 	}
@@ -168,8 +171,9 @@ void UpdateDrawFrame(void){
 			GuiButton({50, 255, 25, 25 }, GuiIconText(ICON_ARROW_DOWN, ""))){
 		world.movePlayer(world.getPlayerPos().x, 0, true);
 		if (curr->m_down.get() == nullptr){
-			curr->m_down = std::make_unique<WorldNode>();
+			curr->m_down = std::make_shared<WorldNode>();
 			randomizeB(world, world.getCurrNode()->m_down.get(), false);
+			curr->m_down->m_up = curr;
 		}
 		world.setCurrNode(curr->m_down);
 	}
