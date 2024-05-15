@@ -41,15 +41,14 @@ void WorldNode::render(){
 		DrawLine(LEFT_PANE_W + i * BLOCK_SIZE, 0, LEFT_PANE_W + i * BLOCK_SIZE, WINDOW_H, DARKGRAY);
 }
 
-bool World::movePlayer(int nx, int ny, bool force){
+bool World::movePlayer(int nx, int ny){
 	std::shared_ptr<WorldNode> node = getCurrNode();
 	WorldNode* chunk = getCurrNode().get();
 
 	int sx, sy;
 	sx = _player.x, sy = _player.y;
 
-	if (chunk->inBounds(nx, ny) &&
-			(force || chunk->getEntityAt(nx, ny) != ENT_WALL)){
+	if (chunk->inBounds(nx, ny) && chunk->getEntityAt(nx, ny) != ENT_WALL){
 		std::vector<std::vector<EntType>> & grid = chunk->getGrid();
 
 		grid[_player.y][_player.x] = ENT_NONE;

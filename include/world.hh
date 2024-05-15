@@ -62,7 +62,7 @@ public:
 	}
 	~World() = default;
 	
-	bool movePlayer(int dx, int dy, bool force=false);
+	bool movePlayer(int dx, int dy);
 	void setEntity(int dx, int dy, EntType ent_type);
 	void setCurrNode(std::shared_ptr<WorldNode> new_node){ _curr = new_node; }
 	std::shared_ptr<WorldNode> getCurrNode() const { return _curr; }
